@@ -7,4 +7,36 @@ export class Task {
         this.dueDate = dueDate;
         this.priority = priority;
     }
+
+    get title() {
+        return this.title;
+    }
+
+    set title(val) {
+        this.title = val;
+    }
+
+    get title() {
+        return this.description;
+    }
+
+    set description(val) {
+        this.description = val;
+    }
+
+    get dueDate() {
+        return this.dueDate;
+    }
+
+    set dueDate(val) {
+        this.dueDate = val;
+    }
+
+    get priority() {
+        return this.priority;
+    }
+
+    set priority(val) {
+        this.priority = val;
+    }
 }
