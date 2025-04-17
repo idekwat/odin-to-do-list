@@ -1,16 +1,17 @@
 //project constructor
 
-export class Project {
+export default class Project {
     constructor(projectName, todos=[]) {
         this.projectName = projectName;
         this.todos = todos;
     }
 
-    get projectName() {
+    get thisName() {
         return this.projectName;
     }
 
-    set projectName(val) {
+    set thisName(val) {
         this.projectName = val;
+
     }
 }
