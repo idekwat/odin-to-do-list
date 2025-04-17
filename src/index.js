@@ -2,6 +2,7 @@
 import "./styles.css";
 import Project from "./projects.js";
 import Task from "./tasks.js";
+import {storageAvailable} from "./localStorage.js";
 
 const contentDiv = document.getElementById("content");
 const sideBarDiv = document.getElementById("sidebar");
@@ -9,6 +10,14 @@ const projectList = [];
 mainDisplay()
 
 function mainDisplay() {
+
+    if (storageAvailable("localStorage")) {
+        console.log("Yippee! We can use localStorage awesomeness");
+      } else {
+        console.log("Too bad, no localStorage for us");
+      }
+
+
     contentDiv.replaceChildren();
     sideBarDiv.replaceChildren();
     const homePageButton = document.createElement("button");
