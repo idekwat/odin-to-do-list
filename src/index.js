@@ -9,8 +9,8 @@ const sideBarDiv = document.getElementById("sidebar");
 const projectList = [];
 mainDisplay()
 
+//first thing user sees
 function mainDisplay() {
-
     if (storageAvailable("localStorage")) {
         console.log("Yippee! We can use localStorage awesomeness");
       } else {
@@ -44,9 +44,15 @@ function mainDisplay() {
         const projectClickable = document.createElement("button");
         projectClickable.textContent = project.projectName;
         sideBarDiv.appendChild(projectClickable);
+
+        projectClickable.onclick = (e) => {
+            console.log("this is: " + project.thisName);
+            displayProjectContents(project);
+        }
     });
 }
 
+//funtion for creating new projects
 function createNewProject() {
     const newProjectPrompts = document.createElement("div");
     newProjectPrompts.innerHTML =   '<form id = "newProjectForm">' + 
@@ -68,4 +74,13 @@ function createNewProject() {
         projectList.push(newProject);
         mainDisplay();
     }
+}
+
+//displaying all to-dos of project
+function displayProjectContents(currentProject) {
+    contentDiv.replaceChildren();
+    const projectTitleHeading = document.createElement("h1");
+    projectTitleHeading.id = "projectTitle";
+    projectTitleHeading.textContent = currentProject.thisName;
+    contentDiv.appendChild(projectTitleHeading);
 }
