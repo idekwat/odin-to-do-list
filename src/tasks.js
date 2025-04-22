@@ -8,35 +8,35 @@ export default class Task {
         this.priority = priority;
     }
 
-    get title() {
+    get thisTitle() {
         return this.title;
     }
 
-    set title(val) {
+    set thisTitle(val) {
         this.title = val;
     }
 
-    get title() {
-        return this.description;
+    get thisDescription() {
+        return this.description
     }
 
-    set description(val) {
+    set thisDescription(val) {
         this.description = val;
     }
 
-    get dueDate() {
+    get thisDueDate() {
         return this.dueDate;
     }
 
-    set dueDate(val) {
+    set thisDueDate(val) {
         this.dueDate = val;
     }
 
-    get priority() {
+    get thisPriority() {
         return this.priority;
     }
 
-    set priority(val) {
+    set thisPriority(val) {
         this.priority = val;
     }
 }
