@@ -11,6 +11,8 @@ mainDisplay()
 
 //first thing user sees
 function mainDisplay() {
+    let isOnProject = false;
+
     if (storageAvailable("localStorage")) {
         console.log("Yippee! We can use localStorage awesomeness");
     } 
@@ -46,16 +48,27 @@ function mainDisplay() {
     projectList.forEach((project) => {
         const projectClickable = document.createElement("button");
         projectClickable.textContent = project.projectName;
+        projectClickable.className = "project-btn";
         sideBarDiv.appendChild(projectClickable);
 
         projectClickable.onclick = (e) => {
             displayProjectContents(project);
+            
+
+            addProjectButton.onclick = (e) => {
+                isOnProject = true;
+                addProjectButton.disabled = true;
+                createNewProject(newProjectPrompt, isOnProject, project); 
+                displayProjectContents(project);
+            }
+
+
         }
     });
 }
 
 //funtion for creating new projects
-function createNewProject(newProjectPrompt) {
+function createNewProject(newProjectPrompt, isOnProject, currentProject) {
     newProjectPrompt.innerHTML =   '<form id = "newProjectForm">' + 
                                     '<input type = "text" id ="projectName" placeholder = "Project Name">' +
                                     '<input type = "submit" id ="submitBtn"></form>' +
@@ -63,7 +76,13 @@ function createNewProject(newProjectPrompt) {
 
     cancelBtn.onclick = (e) => {
         newProjectPrompt.remove();
-        mainDisplay();
+
+        if(!isOnProject) {
+            mainDisplay();
+        }
+        else {
+            displayProjectContents(currentProject);
+        }
     }
 
     submitBtn.onclick = (e) => {
@@ -71,7 +90,14 @@ function createNewProject(newProjectPrompt) {
         let name = projectName.value;
         const newProject = new Project(name);
         projectList.push(newProject);
-        mainDisplay();
+
+        if(!isOnProject) {
+            mainDisplay();
+        }
+        else {
+            mainDisplay();
+            displayProjectContents(currentProject);
+        }
     }
 }
 
@@ -94,13 +120,39 @@ function displayProjectContents(currentProject) {
     }
 
     currentProject.todos.forEach((task) => {
+        const taskDiv = document.createElement("div");
+        taskDiv.className = "task-div";
         const taskClickable = document.createElement("button");
+        taskClickable.className = "task-btn";
+        const deleteTask = document.createElement("button");
+        deleteTask.className = "delete-task-btn";
+
         taskClickable.textContent = task.thisTitle + " due on " + task.thisDueDate;
-        contentDiv.appendChild(taskClickable);
+        deleteTask.textContent = "del";
+        contentDiv.appendChild(taskDiv);
+        taskDiv.appendChild(taskClickable);
+        taskDiv.appendChild(deleteTask);
         console.log(currentProject.todos);
+        
+        
+        switch(task.thisPriority) {
+            case("low"):
+            taskClickable.style.backgroundColor = "green";
+            break;
+            case("med"):
+            taskClickable.style.backgroundColor = "yellow";
+            break;
+            case("high"):
+            taskClickable.style.backgroundColor = "red";
+            break;
+        }
 
         taskClickable.onclick = (e) => {
             displayTaskDetails(task);
+        }
+
+        deleteTask.onclick = (e) => {
+            console.log("delete " + task.thisTitle + "?");
         }
     })
 }

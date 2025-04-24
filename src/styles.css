@@ -33,6 +33,10 @@ body {
     padding: 20px;
     flex-direction: column;
     align-items: center;
+
+    .task-div {
+        display: inline-block;
+    }
 }
 
 
