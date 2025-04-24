@@ -61,8 +61,6 @@ function mainDisplay() {
                 createNewProject(newProjectPrompt, isOnProject, project); 
                 displayProjectContents(project);
             }
-
-
         }
     });
 }
@@ -132,8 +130,6 @@ function displayProjectContents(currentProject) {
         contentDiv.appendChild(taskDiv);
         taskDiv.appendChild(taskClickable);
         taskDiv.appendChild(deleteTask);
-        console.log(currentProject.todos);
-        
         
         switch(task.thisPriority) {
             case("low"):
@@ -152,7 +148,13 @@ function displayProjectContents(currentProject) {
         }
 
         deleteTask.onclick = (e) => {
-            console.log("delete " + task.thisTitle + "?");
+            alert(task.thisTitle + " is now deleted");
+            
+            let index = currentProject.todos.indexOf(task);
+            if(index !== -1) {
+                currentProject.todos.splice(index, 1);
+                displayProjectContents(currentProject);
+            }
         }
     })
 }

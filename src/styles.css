@@ -15,7 +15,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    min-width: 140px;
+    min-width: 120px;
     height: 100vh;
     background-color: grey;
 
@@ -30,12 +30,26 @@ body {
 
 #content {
     display: flex;
-    padding: 20px;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
 
     .task-div {
-        display: inline-block;
+        display: inline-flex;
+        width: 60%;
+        margin: 1vh;
+
+        .task-btn, .delete-task-btn {
+            height: 4vh;
+        }
+        .task-btn {
+            width: 95%;
+
+        }
+        .delete-task-btn {
+            min-width: fit-content;
+            width: 5%;
+        }
     }
 }
 
