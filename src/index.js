@@ -207,7 +207,9 @@ function displayTaskDetails(currentTask) {
     const modal = document.querySelector(".task-modal");
     const closeModal = document.getElementById("closeModal");
     modal.showModal();
+    
     closeModal.onclick = (e) => {
         modal.close();
+        contentDiv.removeChild(taskModal);
     }
 }
