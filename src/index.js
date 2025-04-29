@@ -114,6 +114,7 @@ function displayProjectContents(currentProject) {
     contentDiv.appendChild(addTaskButton);
 
     addTaskButton.onclick = (e) => {
+        addTaskButton.disabled = true;
         addNewTask(currentProject);
     }
 
@@ -195,5 +196,18 @@ function addNewTask(currentProject) {
 }
 
 function displayTaskDetails(currentTask) {
-    console.log(currentTask);
+    const taskModal = document.createElement("dialog");
+    taskModal.className = "task-modal";
+    taskModal.innerHTML =   '<div>' + currentTask.thisTitle + '</div><br>' +
+                            '<div>' + currentTask.thisDescription + '</div><br>' +
+                            '<div>' + currentTask.thisDueDate + '</div><br>' +
+                            '<div>' + currentTask.thisPriority + '</div><br>' +
+                            '<button id = "closeModal">close</button';
+    contentDiv.appendChild(taskModal);
+    const modal = document.querySelector(".task-modal");
+    const closeModal = document.getElementById("closeModal");
+    modal.showModal();
+    closeModal.onclick = (e) => {
+        modal.close();
+    }
 }

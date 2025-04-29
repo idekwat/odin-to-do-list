@@ -51,6 +51,14 @@ body {
             width: 5%;
         }
     }
+
+    .task-modal {
+        position: fixed;
+        top: 20%;
+        left: calc(20%);
+        height: 60%;
+        width: 60%;
+    }
 }
 
 
