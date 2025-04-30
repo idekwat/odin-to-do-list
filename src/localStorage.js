@@ -19,3 +19,8 @@ export function storageAvailable(type) {
     }
   }
   
+
+  export function addToStorage(storeKey, storeVal) {
+    localStorage.setItem(storeKey, JSON.stringify(storeVal));
+    console.log(localStorage.getItem(storeKey));
+  }

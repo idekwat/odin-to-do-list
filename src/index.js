@@ -2,7 +2,7 @@
 import "./styles.css";
 import Project from "./projects.js";
 import Task from "./tasks.js";
-import {storageAvailable} from "./localStorage.js";
+import {storageAvailable, addToStorage} from "./localStorage.js";
 
 const contentDiv = document.getElementById("content");
 const sideBarDiv = document.getElementById("sidebar");
@@ -87,6 +87,7 @@ function createNewProject(newProjectPrompt, isOnProject, currentProject) {
         e.preventDefault();
         let name = projectName.value;
         const newProject = new Project(name);
+        addToStorage(name, newProject);
         projectList.push(newProject);
 
         if(!isOnProject) {
