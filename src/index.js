@@ -51,10 +51,18 @@ function mainDisplay() {
     }
     
     projectList.forEach((project) => {
+        const projectDiv = document.createElement("div");
+        projectDiv.className = "project-div";
         const projectClickable = document.createElement("button");
         projectClickable.textContent = project.projectName;
         projectClickable.className = "project-btn";
-        sideBarDiv.appendChild(projectClickable);
+        const projectDelete = document.createElement("button");
+        projectDelete.textContent = "del";
+        projectDelete.className = "project-del-btn";
+
+        projectDiv.appendChild(projectClickable);
+        projectDiv.appendChild(projectDelete);
+        sideBarDiv.appendChild(projectDiv);
 
         projectClickable.onclick = (e) => {
             displayProjectContents(project);
@@ -65,6 +73,17 @@ function mainDisplay() {
                 createNewProject(newProjectPrompt, isOnProject, project); 
                 displayProjectContents(project);
             }
+        }
+
+        projectDelete.onclick = (e) => {
+            alert(project.thisName + "is now deleted");
+
+            let index = projectList.indexOf(project);
+            if(index !== -1) {
+                project.splice(index, 1);
+                mainDisplay();
+            }
+            projectStorage(projectList);
         }
     });
 }
@@ -161,6 +180,7 @@ function displayProjectContents(currentProject) {
                 currentProject.todos.splice(index, 1);
                 displayProjectContents(currentProject);
             }
+            projectStorage(projectList);
         }
     })
 }

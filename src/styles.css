@@ -19,11 +19,22 @@ body {
     height: 100vh;
     background-color: grey;
 
+    .project-div {
+        display: inline-flex;
+        width: 100%;
+
+        .project-btn {
+            width: 60%;
+        }
+        .project-del-btn {
+            width: 20%;
+        }
+    }
     
     button, input {
         width: 80%;
         height: 30px;
-        margin: 10px
+        margin: 4px 0px 4px 0px
     }
 
 }
