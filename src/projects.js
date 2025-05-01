@@ -12,6 +12,5 @@ export default class Project {
 
     set thisName(val) {
         this.projectName = val;
-
     }
 }

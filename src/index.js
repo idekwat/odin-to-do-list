@@ -2,15 +2,20 @@
 import "./styles.css";
 import Project from "./projects.js";
 import Task from "./tasks.js";
-import {storageAvailable, addToStorage} from "./localStorage.js";
+import {storageAvailable, projectStorage} from "./localStorage.js";
 
 const contentDiv = document.getElementById("content");
 const sideBarDiv = document.getElementById("sidebar");
-const projectList = [];
+let projectList = [];
 mainDisplay()
 
 //first thing user sees
 function mainDisplay() {
+
+    if(localStorage.getItem("projectStored") != null) {
+        projectList = JSON.parse(localStorage.getItem("projectStored"));
+    }
+
     let isOnProject = false;
 
     if (storageAvailable("localStorage")) {
@@ -54,7 +59,6 @@ function mainDisplay() {
         projectClickable.onclick = (e) => {
             displayProjectContents(project);
             
-
             addProjectButton.onclick = (e) => {
                 isOnProject = true;
                 addProjectButton.disabled = true;
@@ -87,8 +91,8 @@ function createNewProject(newProjectPrompt, isOnProject, currentProject) {
         e.preventDefault();
         let name = projectName.value;
         const newProject = new Project(name);
-        addToStorage(name, newProject);
         projectList.push(newProject);
+        projectStorage(projectList);
 
         if(!isOnProject) {
             mainDisplay();
@@ -105,7 +109,7 @@ function displayProjectContents(currentProject) {
     contentDiv.replaceChildren();
     const projectTitleHeading = document.createElement("h1");
     projectTitleHeading.id = "projectTitle";
-    projectTitleHeading.textContent = currentProject.thisName;
+    projectTitleHeading.textContent = currentProject.projectName;
 
     const addTaskButton = document.createElement("button");
     addTaskButton.id = "addTaskBtn";
@@ -127,7 +131,7 @@ function displayProjectContents(currentProject) {
         const deleteTask = document.createElement("button");
         deleteTask.className = "delete-task-btn";
 
-        taskClickable.textContent = task.thisTitle + " due on " + task.thisDueDate;
+        taskClickable.textContent = task.title + " due on " + task.dueDate;
         deleteTask.textContent = "del";
         contentDiv.appendChild(taskDiv);
         taskDiv.appendChild(taskClickable);
@@ -187,6 +191,7 @@ function addNewTask(currentProject) {
 
         const newTask = new Task(title, description, dueDate, priority);
         currentProject.todos.push(newTask);
+        projectStorage(projectList);
         displayProjectContents(currentProject);
     }
 
@@ -199,10 +204,10 @@ function addNewTask(currentProject) {
 function displayTaskDetails(currentTask) {
     const taskModal = document.createElement("dialog");
     taskModal.className = "task-modal";
-    taskModal.innerHTML =   '<div>' + currentTask.thisTitle + '</div><br>' +
-                            '<div>' + currentTask.thisDescription + '</div><br>' +
-                            '<div>' + currentTask.thisDueDate + '</div><br>' +
-                            '<div>' + currentTask.thisPriority + '</div><br>' +
+    taskModal.innerHTML =   '<div>' + currentTask.title + '</div><br>' +
+                            '<div>' + currentTask.description + '</div><br>' +
+                            '<div>' + currentTask.dueDate + '</div><br>' +
+                            '<div>' + currentTask.priority + '</div><br>' +
                             '<button id = "closeModal">close</button';
     contentDiv.appendChild(taskModal);
     const modal = document.querySelector(".task-modal");
