@@ -12,18 +12,19 @@ mainDisplay()
 //first thing user sees
 function mainDisplay() {
 
-    if(localStorage.getItem("projectStored") != null) {
-        projectList = JSON.parse(localStorage.getItem("projectStored"));
+    if(localStorage.getItem("arrayStored") != null) {
+        projectList = JSON.parse(localStorage.getItem("arrayStored"));
     }
 
     let isOnProject = false;
 
+    /*
     if (storageAvailable("localStorage")) {
-        console.log("Yippee! We can use localStorage awesomeness");
+        console.log("localStorage is usable");
     } 
     else {
-        console.log("Too bad, no localStorage for us");
-    }
+        alert("Too bad, no localStorage for us");
+    }*/
 
     contentDiv.replaceChildren();
     sideBarDiv.replaceChildren();
@@ -76,14 +77,14 @@ function mainDisplay() {
         }
 
         projectDelete.onclick = (e) => {
-            alert(project.thisName + "is now deleted");
+            alert(project.projectName + " will be deleted");
 
             let index = projectList.indexOf(project);
             if(index !== -1) {
-                project.splice(index, 1);
+                projectList.splice(index, 1);
+                projectStorage(projectList);
                 mainDisplay();
             }
-            projectStorage(projectList);
         }
     });
 }
@@ -94,7 +95,8 @@ function createNewProject(newProjectPrompt, isOnProject, currentProject) {
                                     '<input type = "text" id ="projectName" placeholder = "Project Name">' +
                                     '<input type = "submit" id ="submitBtn"></form>' +
                                     '<button id = "cancelBtn">cancel</button';
-
+    newProjectPrompt.id = "projectPrompt";
+    
     cancelBtn.onclick = (e) => {
         newProjectPrompt.remove();
 
