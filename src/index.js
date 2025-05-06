@@ -15,16 +15,7 @@ function mainDisplay() {
     if(localStorage.getItem("arrayStored") != null) {
         projectList = JSON.parse(localStorage.getItem("arrayStored"));
     }
-
     let isOnProject = false;
-
-    /*
-    if (storageAvailable("localStorage")) {
-        console.log("localStorage is usable");
-    } 
-    else {
-        alert("Too bad, no localStorage for us");
-    }*/
 
     contentDiv.replaceChildren();
     sideBarDiv.replaceChildren();
@@ -158,7 +149,7 @@ function displayProjectContents(currentProject) {
         taskDiv.appendChild(taskClickable);
         taskDiv.appendChild(deleteTask);
         
-        switch(task.thisPriority) {
+        switch(task.priority) {
             case("low"):
             taskClickable.style.backgroundColor = "green";
             break;
@@ -171,7 +162,8 @@ function displayProjectContents(currentProject) {
         }
 
         taskClickable.onclick = (e) => {
-            displayTaskDetails(task);
+            console.log(task);
+            displayTaskDetails(task, currentProject);
         }
 
         deleteTask.onclick = (e) => {
@@ -223,7 +215,7 @@ function addNewTask(currentProject) {
     }
 }
 
-function displayTaskDetails(currentTask) {
+function displayTaskDetails(currentTask, currentProject) {
     const taskModal = document.createElement("dialog");
     taskModal.className = "task-modal";
     taskModal.innerHTML =   '<div>' + currentTask.title + '</div><br>' +
@@ -238,6 +230,13 @@ function displayTaskDetails(currentTask) {
     
     closeModal.onclick = (e) => {
         modal.close();
-        contentDiv.removeChild(taskModal);
+        displayProjectContents(currentProject);
     }
+
+    window.addEventListener('keydown', function (e) {
+        if(e.key === 'Escape') {
+            modal.close();
+            displayProjectContents(currentProject);
+        }
+    })
 }
