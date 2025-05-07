@@ -167,7 +167,7 @@ function displayProjectContents(currentProject) {
         }
 
         deleteTask.onclick = (e) => {
-            alert(task.thisTitle + " is now deleted");
+            alert(task.title + " is now deleted");
             
             let index = currentProject.todos.indexOf(task);
             if(index !== -1) {
