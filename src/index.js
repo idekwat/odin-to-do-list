@@ -26,8 +26,11 @@ function mainDisplay() {
     addProjectButton.disabled = false;
     const newProjectPrompt = document.createElement("div");
     newProjectPrompt.id = "projectFormDiv";
-    sideBarDiv.appendChild(homePageButton);
-    sideBarDiv.appendChild(addProjectButton);
+    const sideBarConstant = document.createElement("div");
+    sideBarConstant.id = "sidebarConst";
+    sideBarConstant.appendChild(homePageButton);
+    sideBarConstant.appendChild(addProjectButton);
+    sideBarDiv.appendChild(sideBarConstant);
     sideBarDiv.appendChild(newProjectPrompt);
     
 
