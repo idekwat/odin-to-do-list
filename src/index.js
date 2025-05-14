@@ -2,7 +2,8 @@
 import "./styles.css";
 import Project from "./projects.js";
 import Task from "./tasks.js";
-import {storageAvailable, projectStorage} from "./localStorage.js";
+import {projectStorage} from "./localStorage.js";
+import {format} from "date-fns";
 
 const contentDiv = document.getElementById("content");
 const sideBarDiv = document.getElementById("sidebar");
@@ -122,6 +123,9 @@ function createNewProject(newProjectPrompt, isOnProject, currentProject) {
 //displaying all to-dos of project
 function displayProjectContents(currentProject) {
     contentDiv.replaceChildren();
+    const projectConstants = document.createElement("div");
+    projectConstants.id = "projectConst";
+
     const projectTitleHeading = document.createElement("h1");
     projectTitleHeading.id = "projectTitle";
     projectTitleHeading.textContent = currentProject.projectName;
@@ -130,8 +134,9 @@ function displayProjectContents(currentProject) {
     addTaskButton.id = "addTaskBtn";
     addTaskButton.textContent = "Add Task";
 
-    contentDiv.appendChild(projectTitleHeading);
-    contentDiv.appendChild(addTaskButton);
+    projectConstants.appendChild(projectTitleHeading);
+    projectConstants.appendChild(addTaskButton);
+    contentDiv.appendChild(projectConstants);
 
     addTaskButton.onclick = (e) => {
         addTaskButton.disabled = true;
@@ -146,12 +151,12 @@ function displayProjectContents(currentProject) {
         const deleteTask = document.createElement("button");
         deleteTask.className = "delete-task-btn";
 
-        taskClickable.textContent = task.title + " due on " + task.dueDate;
+        let formatDate = format(new Date(task.dueDate), "MMM/dd/yyyy")
+        taskClickable.textContent = task.title + " due on " + formatDate;
         deleteTask.textContent = "del";
         contentDiv.appendChild(taskDiv);
         taskDiv.appendChild(taskClickable);
         taskDiv.appendChild(deleteTask);
-        
         switch(task.priority) {
             case("low"):
             taskClickable.style.backgroundColor = "green";
