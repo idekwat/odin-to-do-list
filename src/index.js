@@ -3,7 +3,7 @@ import "./styles.css";
 import Project from "./projects.js";
 import Task from "./tasks.js";
 import {projectStorage} from "./localStorage.js";
-import {format} from "date-fns";
+import {compareAsc, format, isDate} from "date-fns";
 
 const contentDiv = document.getElementById("content");
 const sideBarDiv = document.getElementById("sidebar");
@@ -211,10 +211,31 @@ function addNewTask(currentProject) {
         let dueDate = taskDate.value;
         let priority = taskPrio.value;
 
-        const newTask = new Task(title, description, dueDate, priority);
-        currentProject.todos.push(newTask);
-        projectStorage(projectList);
-        displayProjectContents(currentProject);
+        let currentDate = new Date();
+        let setDate = new Date(dueDate);
+
+        const compareDates = compareAsc(setDate, currentDate);
+
+        if (title.trim() != "" && compareDates >= 0)
+        {
+            const newTask = new Task(title, description, dueDate, priority);
+            currentProject.todos.push(newTask);
+            projectStorage(projectList);
+            displayProjectContents(currentProject);
+        }
+             
+        else if (title.trim() == "") {
+            alert("Task name is needed");
+        }
+        else if (compareDates < 0) {
+         
+            alert ("Date Invalid");
+        }
+        
+        else {
+            alert("Set a date");
+        }
+
     }
 
     cancelBtn.onclick = (e) => {
