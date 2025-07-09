@@ -46,6 +46,7 @@ body {
             width: 20%;
         }
     }
+    
     #newProjectForm, #projectPrompt {
         display: flex;
         flex-direction: column;

@@ -3,7 +3,8 @@ import "./styles.css";
 import Project from "./projects.js";
 import Task from "./tasks.js";
 import {projectStorage} from "./localStorage.js";
-import {compareAsc, format, isDate} from "date-fns";
+import {compareAsc, compareDesc, format, getTime, setDate} from "date-fns";
+import { el } from "date-fns/locale";
 
 const contentDiv = document.getElementById("content");
 const sideBarDiv = document.getElementById("sidebar");
@@ -82,6 +83,22 @@ function mainDisplay() {
             }
         }
     });
+
+    if(projectList.length < 1) {
+        contentDiv.replaceChildren();
+        const noProjectsYet = document.createElement("h1");
+        noProjectsYet.id = "projectEmpty";
+        noProjectsYet.textContent = "NO PROJECTS YET, CREATE ONE";
+        contentDiv.appendChild(noProjectsYet);
+    }
+    else {
+        contentDiv.replaceChildren();
+        const noProjectsYet = document.createElement("h1");
+        noProjectsYet.id = "projectEmpty";
+        noProjectsYet.textContent = "CLICK ON THE PROJECT TO ADD TASKS";
+        contentDiv.appendChild(noProjectsYet);
+    }
+
 }
 
 //funtion for creating new projects
@@ -211,13 +228,12 @@ function addNewTask(currentProject) {
         let dueDate = taskDate.value;
         let priority = taskPrio.value;
 
-        let currentDate = new Date();
+        let currentDate = format(new Date(),"MMM/dd/yyyy");
         let setDate = new Date(dueDate);
 
         const compareDates = compareAsc(setDate, currentDate);
 
-        if (title.trim() != "" && compareDates >= 0)
-        {
+        if (title.trim() != "" && compareDates >= 0){
             const newTask = new Task(title, description, dueDate, priority);
             currentProject.todos.push(newTask);
             projectStorage(projectList);
@@ -235,7 +251,6 @@ function addNewTask(currentProject) {
         else {
             alert("Set a date");
         }
-
     }
 
     cancelBtn.onclick = (e) => {
